@@ -1,0 +1,14 @@
+{
+    "name": "ImagemUpload",
+    "alias": "imagemupload",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Rd7\\ImagemUpload\\Providers\\ImagemUploadServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

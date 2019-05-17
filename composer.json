@@ -1,0 +1,30 @@
+{
+    "name": "rd7/imagemupload",
+    "description": "Pacote de upload de imagens para Laravel",
+    "authors": [
+        {
+            "name": "Rodrigo de Souza",
+            "email": "rd7.rodrigo@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "intervention/image": "^2.4",
+        "illuminate/support": "4.2.*|5.*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Rd7\\ImagemUpload\\Providers\\ImagemUploadServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Rd7\\ImagemUpload\\": "src/"
+        }
+    }
+}
