@@ -115,11 +115,7 @@ class ImagemUpload {
 
             $array['destino'] = config("imagemupload.destino.root")."/".$array['destino'];
 
-            
-
             $caminho = str_replace('//', '/', $array['destino'].(isset($array['resolucao']['pasta']) ? "/" . $array['resolucao']['pasta']."/" : '').'/');
-
-            dd($array['destino'], $caminho);
 
             if (!File::exists($caminho)) {
                 $result = File::makeDirectory($caminho, 0777, true);
