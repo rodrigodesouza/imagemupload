@@ -3,7 +3,6 @@
 namespace Rd7\ImagemUpload\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Rd7\ImagemUpload\ImagemUpload;
 use Illuminate\Support\Facades\File;
@@ -22,10 +21,11 @@ class ImagemUploadController extends Controller
     }
     public function uploadImagem()
     {   
-        $destino = 'user/';
+        // testes
+        $destino = 'teste';
         $resolucao = ['p' => ['h' => 150, 'w' => 150], 'm' => ['h' => 500, 'w' => 500]];
-
-        $imagens = ImagemUpload::salva(['input_file' => 'imagem', 'destino' => $destino, 'preencher' =>['p'], 'resolucao' => $resolucao]);
+        // $imagens = ImagemUpload::salva(['input_file' => 'imagem', 'destino' => $destino]); //Apenas move a imagem sem alterar sua resolução
+        $imagens = ImagemUpload::salva(['input_file' => 'imagem', 'destino' => $destino, 'preencher' =>['p'], 'resolucao' => $resolucao]); //cria novas imagens para as pastas com as resoulções.
 
         if ($imagens) {
             $input['imagem'] = $imagens;
@@ -38,11 +38,9 @@ class ImagemUploadController extends Controller
 
     }
 
-    public function imagemRender($path = null, $tamanho = 'p', $imagem = null)
+    public function imagemRender($path = null, $tamanho = '/', $imagem = null)
     {
-
-        $path = config('filesystems')['disks']['public']['root'] . $path . '/' . $tamanho . '/' . $imagem;
-        // $path = storage_path() . '/app/public/' . $path . '/' . $tamanho . '/' . $imagem;
+        $path = config('filesystems')['disks']['public']['root']. "/" . $path . '/' . $tamanho . (!empty($imagem) ? "/" . $imagem : "");
 
         if (!File::exists($path)) {
             abort(404);
@@ -70,15 +68,5 @@ class ImagemUploadController extends Controller
        return redirect()->back();
 
     }
-    
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

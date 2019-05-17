@@ -19,10 +19,11 @@ Route::get('/upload-imagem-test', 'ImagemUploadController@testUploadImagem');
 
 Route::post('/pot-upload-imagem-test', 'ImagemUploadController@uploadImagem');
 
-Route::get('img-render/{path?}/{tamanho?}/{imagem?}', [
+Route::get('img-render/{path}/{tamanho?}/{imagem?}', [
 	'as' => 'imagem.render',
 	'uses' => 'ImagemUploadController@imagemRender',
 ]);
+
 Route::get('img-delete/{imagem}', [
 	'as' => 'imagem.delete',
 	'uses' => 'ImagemUploadController@imagemDelete',
