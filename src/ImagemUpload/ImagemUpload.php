@@ -25,7 +25,6 @@ class ImagemUpload {
         if (!$array['imagens'] || !$array['destino']) {
             exit("indices \"input_file\" e \"destino\" são obrigatórios");
         }
-        
 
         $imagens = Input::file(str_replace('[]', '', $array['imagens']));
 
@@ -119,7 +118,9 @@ class ImagemUpload {
 
             if (!File::exists($caminho)) {
                 $result = File::makeDirectory($caminho, 0777, true);
-                File::put($caminho . '.gitignore', '* !.gitignore');
+                if (config('imagemupload.generate_gitignore')) {
+                    File::put($caminho . '.gitignore', '* !.gitignore');
+                }
             }            
 
             $img->save($caminho . $array['novoNome']);
@@ -137,7 +138,12 @@ class ImagemUpload {
     {
         $imagem     = $array['imagem'];
         $resolucao  = $array['resolucao'];
-        $destino    = $array['destino'];
+        // $destino    = $array['destino'];
+
+        $array['destino'] = config("imagemupload.destino.root")."/".$array['destino'];
+
+        $destino = str_replace('//', '/', $array['destino'].(isset($array['resolucao']['pasta']) ? "/" . $array['resolucao']['pasta']."/" : '').'/');
+        
         $status = [];
         if(is_array($resolucao)) {
             foreach ($resolucao as $pasta => $tamanho) {

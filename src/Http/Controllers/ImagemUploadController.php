@@ -58,7 +58,7 @@ class ImagemUploadController extends Controller
 
     public function imagemDelete($imagem)
     {
-        $destino = storage_path() . '/app/public/user/';
+        $destino = 'teste';
         $resolucao = ['p' => ['h' => 150, 'w' => 150], 'm' => ['h' => 500, 'w' => 500]];
 
         session()->forget('imagens.'.array_search($imagem, session('imagens')));

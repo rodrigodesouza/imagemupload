@@ -90,8 +90,8 @@
                 @if(session()->has('imagens'))
                     @php
                         $imagens = session('imagens');
-                        
                     @endphp
+                        
                     <table class="table">
                         @foreach($imagens as $imagem)
                         <tr>
@@ -107,7 +107,6 @@
                     <label for="">Imagem</label>
                     <input type="file" name="imagem" id="" required>
                     <button class="bt btn-primary" type="submit">Upload Imagem</button>
-                    <input type="text" name="teste">
                 </form>
 
                 <label for="">Varias imagens</label>

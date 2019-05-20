@@ -11,10 +11,6 @@
 |
 */
 
-Route::prefix('imagemupload')->group(function() {
-    Route::get('/', 'ImagemUploadController@index');
-});
-
 Route::get('/upload-imagem-test', 'ImagemUploadController@testUploadImagem');
 
 Route::post('/pot-upload-imagem-test', 'ImagemUploadController@uploadImagem');
