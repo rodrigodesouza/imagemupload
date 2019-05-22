@@ -136,25 +136,21 @@ class ImagemUpload {
 
     public static function deleta($array = array()) 
     {
-        $imagem     = $array['imagem'];
-        $resolucao  = $array['resolucao'];
-        // $destino    = $array['destino'];
-
-        $array['destino'] = config("imagemupload.destino.root")."/".$array['destino'];
-
-        $destino = str_replace('//', '/', $array['destino'].(isset($array['resolucao']['pasta']) ? "/" . $array['resolucao']['pasta']."/" : '').'/');
-        
-        $status = [];
+        $imagem             = $array['imagem'];
+        $resolucao          = (isset($array['resolucao'])) ? $array['resolucao'] : false;
+        $array['destino']   = config("imagemupload.destino.root")."/".$array['destino'];
+        $status             = [];
+        // $destino = str_replace('//', '/', $array['destino'].(isset($array['resolucao']['pasta']) ? "/" . $array['resolucao']['pasta']."/" : '').'/');
         if(is_array($resolucao)) {
             foreach ($resolucao as $pasta => $tamanho) {
                 if(is_array($resolucao[$pasta])){
-                    $status[] = @unlink($destino . $pasta . '/' . $imagem);
+                    $status[] = @unlink($array['destino'] . "/" . $pasta . '/' . $imagem);
                 } else {
-                    $status[] = @unlink($destino . $imagem);
+                    $status[] = @unlink($array['destino'] . "/" . $imagem);
                 }
             }
         } else {
-            $status = @unlink($destino . $imagem);
+            $status = @unlink($array['destino'] . "/" . $imagem);
         }
 
         return $status;
