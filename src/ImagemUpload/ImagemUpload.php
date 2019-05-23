@@ -8,6 +8,15 @@ use Intervention\Image\ImageManagerStatic as Image;
 class ImagemUpload {
 
     public static function salva($array = array()) {
+
+        ini_set('memory_limit', -1);
+        ini_set('max_execution_time', 0);
+        ini_set('max_input_time', -1);
+        ini_set('max_input_vars', -1);
+        ini_set('post_max_size', -1);
+        ini_set('upload_max_filesize', -1);
+        ini_set('max_file_uploads', -1);
+        set_time_limit(0);
   
         $array['imagens'] = (isset($array['input_file'])) ? $array['input_file'] : false;
 
