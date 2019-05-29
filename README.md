@@ -71,7 +71,7 @@ Caso queira enviar várias imagens, é muito simples:
  public function __construct()
  {
  	$this->user = [
-			'input_file' => 'galeria', //Nome do input
+			'input_file' => 'galeria', //nome do input
 			'destino' => 'galeria/',
     		'resolucao' => ['p' => ['h' => 200, 'w' => 200], 'm' => ['h' => 400, 'w' => 400], ...]
       ];
