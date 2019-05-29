@@ -1,8 +1,6 @@
 # Laravel Imagem Upload
 > Faça upload de imagens ainda mais facilmente no Laravel
 
-[ ! [NPM Version] [npm-imagem] ] [npm-url] [ ! [Status da Build][travis-image] ] [travis-url][ ! [Estatísticas de Downloads] [npm-downloads] ] [npm-url ]  
-
 Este pacote facilita o **upload de imagens e renderização** delas sem você precisar criar pastas e link simbólico. Envie imagens e redimensione em diversos tamanhos para seu site.
 
 O que ele fará por você:
@@ -11,8 +9,6 @@ O que ele fará por você:
 - redimensionar para quantos tamanhos desejar
 - renderizar imagens escondendo a pasta de origem
 
-
-! [] (header.png)
 
 ## Instalação
 
@@ -40,7 +36,7 @@ _Você pode ter imagens em quantos tamanhos desejar._
  public function __construct()
  {
  	$this->user = [
-			'input_file' => 'user', //Nome do input
+			'input_file' => 'user', //nome do input
 			'destino' => 'users/',
     		'resolucao' => ['p' => ['h' => 200, 'w' => 200], 'm' => ['h' => 400, 'w' => 400], ...]
       ];
@@ -50,7 +46,7 @@ _Você pode ter imagens em quantos tamanhos desejar._
     {
             $input = $request->all();
             
-            $imagens = ImagemUpload::salva($this->capa);
+            $imagens = ImagemUpload::salva($this->user);
 			//retorno: image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg
             if ($imagens) {
                 $input['imagem'] = $imagens;
@@ -85,11 +81,11 @@ Caso queira enviar várias imagens, é muito simples:
     {
             $input = $request->all();
             
-            $imagens = ImagemUpload::salva($this->capa);
+            $imagens = ImagemUpload::salva($this->user);
 			//retorno: [
-				image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg,
-				image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg
-			]
+				// image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg,
+				// image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg
+			// ]
             if ($imagens) {
                 $input['imagens'] = $imagens;
             }
