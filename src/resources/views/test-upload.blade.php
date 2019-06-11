@@ -95,14 +95,21 @@
                     <table class="table">
                         @foreach($imagens as $imagem)
                         <tr>
-                            <td><img src="{{ route('imagem.render', 'teste/p/' . $imagem) }}" alt=""></td>
+                            <td><img src="{{ route('imagem.render', 'teste/p/' . $imagem) }}" alt="" class="cortar"></td>
                             <td><a href="{{ route('imagem.delete', $imagem) }}">Excluir</a></td>
                         </tr>
                         @endforeach
                     </table>
                 @endif
-                <label for="">Única imagem</label>
-               <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
+                {{-- <label for="">Única imagem</label> --}}
+                <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
+                    @csrf    
+                    @component('imagemupload::components.upload-view', ['name' => 'imagem', 'label' => 'Foto', 'multiple' => true])
+                        
+                    @endcomponent
+                    <button class="bt btn-primary" type="submit">Upload Imagem</button>
+                </form>
+               {{-- <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
                     @csrf    
                     <label for="">Imagem</label>
                     <input type="file" name="imagem" id="" required>
@@ -115,8 +122,13 @@
                     <label for="">Imagem</label>
                     <input type="file" name="imagem[]" id="" multiple required>
                     <button class="bt btn-primary" type="submit">Upload Imagem</button>
-                </form>
+                </form> --}}
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+        {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> --}}
+
+        @yield('scripts')
     </body>
 </html>

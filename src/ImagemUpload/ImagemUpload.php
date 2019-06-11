@@ -64,7 +64,7 @@ class ImagemUpload {
         
         $nome = str_slug(pathinfo($imagem->getClientOriginalName(), PATHINFO_FILENAME));
 
-        $extensao = $imagem->getClientOriginalExtension();
+        $array['extensao'] = $extensao = $imagem->getClientOriginalExtension();
 
         $array['novoNome'] = $nome . '_' .md5(uniqid(rand(), true)) . '.' . $extensao;
         $array['source'] = $source;
@@ -95,30 +95,31 @@ class ImagemUpload {
     public static function moveImagem($array){
         
         try {
+            if ($array['extensao'] != 'svg') {
+                $img = Image::make($array['source']);
 
-            $img = Image::make($array['source']);
+                if (isset($array['crop'])) {
 
-            if (isset($array['crop'])) {
-
-            }
-            
-            if (!empty($array['crop']['x']) || !empty($array['crop']['y'])) {
+                }
                 
-                $x = (integer) $array['crop']['x'];
-                $y = (integer) $array['crop']['y'];
-                $h = (integer) $array['crop']['h'];
-                $w = (integer) $array['crop']['w'];
-                $img = $img->crop($w, $h, $x, $y);
-            }
+                if (!empty($array['crop']['x']) || !empty($array['crop']['y'])) {
+                    
+                    $x = (integer) $array['crop']['x'];
+                    $y = (integer) $array['crop']['y'];
+                    $h = (integer) $array['crop']['h'];
+                    $w = (integer) $array['crop']['w'];
+                    $img = $img->crop($w, $h, $x, $y);
+                }
 
-            if($array['resolucao']){
-                $img->resize(isset($array['resolucao']['dimensoes']['w']) ? $array['resolucao']['dimensoes']['w'] : $w, isset($array['resolucao']['dimensoes']['h']) ? $array['resolucao']['dimensoes']['h'] : $h, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-            }
+                if($array['resolucao']){
+                    $img->resize(isset($array['resolucao']['dimensoes']['w']) ? $array['resolucao']['dimensoes']['w'] : $w, isset($array['resolucao']['dimensoes']['h']) ? $array['resolucao']['dimensoes']['h'] : $h, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
 
-            if (count($array['preencher']) > 0 && in_array($array['resolucao']['pasta'], $array['preencher'])) {
-                $img->resizeCanvas($array['resolucao']['dimensoes']['w'], $array['resolucao']['dimensoes']['h'], 'center', false, explode(', ', $array['background']));
+                if (count($array['preencher']) > 0 && in_array($array['resolucao']['pasta'], $array['preencher'])) {
+                    $img->resizeCanvas($array['resolucao']['dimensoes']['w'], $array['resolucao']['dimensoes']['h'], 'center', false, explode(', ', $array['background']));
+                }
             }
 
             $array['destino'] = config("imagemupload.destino.root")."/".$array['destino'];
@@ -130,15 +131,21 @@ class ImagemUpload {
                 if (config('imagemupload.generate_gitignore')) {
                     File::put($caminho . '.gitignore', '* !.gitignore');
                 }
-            }            
+            }
 
-            $img->save($caminho . $array['novoNome']);
+            
+            if ($array['extensao'] != 'svg') {
+                $img->save($caminho . $array['novoNome']);
+            } else {
+                File::copy($array['source'], $caminho.$array['novoNome']);
+            }
 
             return true;
 
         } catch (\Exception $e) {
             dd($e);
             return false;
+
         }
 
     }
