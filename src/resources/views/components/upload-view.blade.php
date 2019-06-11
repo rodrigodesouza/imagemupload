@@ -8,6 +8,7 @@
     <input type="file" name="{{ $name }}" class="form-control upload-cropper" onchange="">
 @endif
 
+<input type="hidden" name="size_image">
 @section('scripts')
 <link rel="stylesheet" href="/jqcropper/cropper.css">
 <script src="/jqcropper/jqcropper.js"></script>
@@ -40,7 +41,10 @@ $(document).ready(function(){
 
                 
             }
-            startCrop();
+
+            setTimeout(function(){
+                startCrop();
+            }, 3000)
              //const image = document.getElementById('image');
              
             
@@ -61,6 +65,9 @@ $(document).ready(function(){
                         console.log(event.detail.rotate);
                         console.log(event.detail.scaleX);
                         console.log(event.detail.scaleY);
+                        console.log(JSON.stringify(event.detail));
+                        $("input[name='size_image']").val(JSON.stringify(event.detail))
+                        //document.getElementById("size_image").value = JSON.stringify(event.detail)
                     }
                 });
     }    

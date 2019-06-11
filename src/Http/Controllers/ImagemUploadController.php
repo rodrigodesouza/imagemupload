@@ -8,6 +8,7 @@ use Rd7\ImagemUpload\ImagemUpload;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
+use Illuminate\Support\Facades\Input;
 
 class ImagemUploadController extends Controller
 {
@@ -22,6 +23,7 @@ class ImagemUploadController extends Controller
     public function uploadImagem()
     {   
         // testes
+        // dd(Input::all());
         $destino = 'teste';
         $resolucao = ['p' => ['h' => 150, 'w' => 150], 'm' => ['h' => 500, 'w' => 500]];
         // $imagens = ImagemUpload::salva(['input_file' => 'imagem', 'destino' => $destino]); //Apenas move a imagem sem alterar sua resolução
@@ -48,7 +50,8 @@ class ImagemUploadController extends Controller
 
         $file = File::get($path);
         $type = File::mimeType($path);
-        if($type == 'text/plain') {
+        
+        if($type == 'text/plain' || $type == "image/svg") {
             $type = 'image/svg+xml';
         }
         
