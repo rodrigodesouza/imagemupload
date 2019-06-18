@@ -35,6 +35,9 @@ em seu formulário html:
 **Passo #2**
 em seu **Controller** coloque as configurações:
 ```php
+
+use Rd7\ImagemUpload\ImagemUpload;
+
  public function __construct()
  {
  	$this->user = [
@@ -102,6 +105,8 @@ em seu formulário html:
 **Passo #2**
 em seu **Controller** coloque as configurações:
 ```php
+use Rd7\ImagemUpload\ImagemUpload;
+
  public function __construct()
  {
  	$this->galeria = [
