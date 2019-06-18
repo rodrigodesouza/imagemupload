@@ -78,7 +78,11 @@ class ImagemUpload {
             } else {
 
                 foreach ($array['resolucao'] as $pasta => $dimensoes) {
-                    $array['resolucao'] = ['pasta' => $pasta, 'dimensoes' => $dimensoes];   
+                    // dd($dimensoes, is_array($pasta), $pasta);
+                    $array['resolucao'] = ['pasta' => ((is_array($dimensoes)) ? $pasta : $dimensoes), 'dimensoes' => $dimensoes];
+                    // dd($array['resolucao']);
+                    // $array['resolucao'] = ['pasta' => $pasta, 'dimensoes' => $dimensoes];   
+                    // dd($pasta, $dimensoes, $array['resolucao']);
                     ImagemUpload::moveImagem($array);
                 }
             }
@@ -110,11 +114,13 @@ class ImagemUpload {
                     $w = (integer) $array['crop']['w'];
                     $img = $img->crop($w, $h, $x, $y);
                 }
-
+                
                 if($array['resolucao']){
-                    $img->resize(isset($array['resolucao']['dimensoes']['w']) ? $array['resolucao']['dimensoes']['w'] : $w, isset($array['resolucao']['dimensoes']['h']) ? $array['resolucao']['dimensoes']['h'] : $h, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
+                    if (isset($array['resolucao']['dimensoes']['w']) and isset($array['resolucao']['dimensoes']['h'])) {
+                        $img->resize(isset($array['resolucao']['dimensoes']['w']) ? $array['resolucao']['dimensoes']['w'] : $w, isset($array['resolucao']['dimensoes']['h']) ? $array['resolucao']['dimensoes']['h'] : $h, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                    }
                 }
 
                 if (count($array['preencher']) > 0 && in_array($array['resolucao']['pasta'], $array['preencher'])) {
@@ -123,8 +129,15 @@ class ImagemUpload {
             }
 
             $array['destino'] = config("imagemupload.destino.root")."/".$array['destino'];
+            // dd($array['resolucao']);
+            if ($array['resolucao']['pasta'] == 'original')
+            {
+                // dd($array, $array['resolucao'], $array['resolucao']['pasta']);
+            }
 
             $caminho = str_replace('//', '/', $array['destino'].(isset($array['resolucao']['pasta']) ? "/" . $array['resolucao']['pasta']."/" : '').'/');
+            // $caminho = str_replace('//', '/', $caminho);
+            // dd($caminho);
 
             if (!File::exists($caminho)) {
                 $result = File::makeDirectory($caminho, 0777, true);
