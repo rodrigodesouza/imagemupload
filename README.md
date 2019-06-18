@@ -44,17 +44,17 @@ em seu **Controller** coloque as configurações:
       ];
 }
 	
-	public function store(Request $request)
-    {
-            $input = $request->all();
-            
-            $imagens = ImagemUpload::salva($this->user);
-			//retorno: image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg
-            if ($imagens) {
-		// a função retorna o novo nome da imagem. guarde em seu banco de dados.
-                $input['imagem'] = $imagens;
-            }
-	}
+public function store(Request $request)
+{
+    $input = $request->all();
+
+    $imagens = ImagemUpload::salva($this->user);
+		//retorno: image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg
+    if ($imagens) {
+	// a função retorna o novo nome da imagem. guarde em seu banco de dados.
+	$input['imagem'] = $imagens;
+    }
+}
 ```
 O pacote vai criar as pastas **p** e **m** dentro de **users/**
 
@@ -111,22 +111,22 @@ em seu **Controller** coloque as configurações:
       ];
 }
 	
-	public function store(Request $request)
-	{
-		$input = $request->all();
+public function store(Request $request)
+{
+	$input = $request->all();
 
-		$imagens = ImagemUpload::salva($this->galeria);
-		/*
-		$imagens retorna: 
-		array (
-			image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg,
-			image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg
-		)
-		*/
-		if ($imagens) {
-			// guarde o nome das imagens em seu banco de dados
-			$input['imagens'] = $imagens;
-		}
+	$imagens = ImagemUpload::salva($this->galeria);
+	/*
+	$imagens retorna: 
+	array (
+		image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg,
+		image-example_3fc5ac232a6e60a10ca20a90350954a9.jpg
+	)
+	*/
+	if ($imagens) {
+		// guarde o nome das imagens em seu banco de dados
+		$input['imagens'] = $imagens;
+	}
 }
 ```
 > OBS: Ao enviar várias imagens, você recebe um array com o novo nome das imagens.
