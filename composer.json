@@ -1,7 +1,7 @@
 {
     "name": "rd7/imagemupload",
     "description": "Pacote de upload de imagens para Laravel",
-    "keywords": ["upload","imagem","image","resize","redimensionar"],
+    "keywords": ["upload","laravel","laravel-upload","imagem","image","resize","redimensionar"],
     "authors": [
         {
             "name": "Rodrigo de Souza",
