@@ -57,7 +57,8 @@ class ImagemUploadController extends Controller
         }
         
         $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
+        $response->header("Cache-Control", "public, max-age=31536000")
+                 ->header("Content-Type", $type);
 
         return $response;
 
