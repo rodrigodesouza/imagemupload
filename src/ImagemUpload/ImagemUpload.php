@@ -129,15 +129,9 @@ class ImagemUpload {
             }
 
             $array['destino'] = config("imagemupload.destino.root")."/".$array['destino'];
-            // dd($array['resolucao']);
-            if ($array['resolucao']['pasta'] == 'original')
-            {
-                // dd($array, $array['resolucao'], $array['resolucao']['pasta']);
-            }
 
             $caminho = str_replace('//', '/', $array['destino'].(isset($array['resolucao']['pasta']) ? "/" . $array['resolucao']['pasta']."/" : '').'/');
             // $caminho = str_replace('//', '/', $caminho);
-            // dd($caminho);
 
             if (!File::exists($caminho)) {
                 $result = File::makeDirectory($caminho, 0777, true);
