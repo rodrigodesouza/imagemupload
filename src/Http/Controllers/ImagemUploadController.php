@@ -24,11 +24,11 @@ class ImagemUploadController extends Controller
     {   
         // testes
         // dd(Input::all());
-        $destino = 'now';
+        $destino = 'ajuste';
         // $resolucao = ['original' => ['h' => 30, 'w' => 30], 'p' => ['h' => 150, 'w' => 150]];
-        // $resolucao = ['p' => ['h' => 150, 'w' => 150], 'm' => ['h' => 500, 'w' => 500], 'original'];
-        // $imagens = ImagemUpload::salva(['input_file' => 'imagem', 'destino' => $destino]); //Apenas move a imagem sem alterar sua resolução
-        $imagens = ImagemUpload::salva(['input_file' => 'imagem', 'destino' => $destino, 'resolucao' => $resolucao]); //cria novas imagens para as pastas com as resoulções.
+        $resolucao = ['p' => ['h' => 150, 'w' => 150], 'm' => ['h' => 500, 'w' => 500], 'original'];
+        $imagens = ImagemUpload::salva(['input_file' => 'imagem', 'destino' => $destino]); //Apenas move a imagem sem alterar sua resolução
+        // $imagens = ImagemUpload::salva(['input_file' => 'imagem', 'destino' => $destino, 'resolucao' => $resolucao]); //cria novas imagens para as pastas com as resoulções.
 
         if ($imagens) {
             $input['imagem'] = $imagens;

@@ -95,7 +95,7 @@
                     <table class="table">
                         @foreach($imagens as $imagem)
                         <tr>
-                            <td><img src="{{ route('imagem.render', 'now/' . $imagem) }}" alt="" class="cortar"></td>
+                            <td><img src="{{ route('imagem.render', 'ajuste/p/' . $imagem) }}" alt="" class="cortar"></td>
                             <td><a href="{{ route('imagem.delete', $imagem) }}">Excluir</a></td>
                         </tr>
                         @endforeach
