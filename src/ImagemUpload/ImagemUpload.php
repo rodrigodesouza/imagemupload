@@ -59,8 +59,6 @@ class ImagemUpload {
     public static function enviaImagem($imagem, $array) {
 
         $source = $imagem->getRealPath();
-
-        list($w, $h) = getimagesize($source);
         
         $nome = str_slug(pathinfo($imagem->getClientOriginalName(), PATHINFO_FILENAME));
 
