@@ -56,7 +56,7 @@ $(document).ready(function(){
     function startCrop()
     {
         $('.upload-cropper').cropper({
-                    aspectRatio: 16 / 9,
+                    aspectRatio: 1 / 1,
                     crop: function(event) {
                         console.log(event.detail.x);
                         console.log(event.detail.y);

@@ -91,11 +91,14 @@
                     @php
                         $imagens = session('imagens');
                     @endphp
-                        
+
                     <table class="table">
                         @foreach($imagens as $imagem)
                         <tr>
-                            <td><img src="{{ route('imagem.render', 'ajuste/p/' . $imagem) }}" alt="" class="cortar"></td>
+                            <td>
+                                <img src="{{ route('imagem.render', 'ajuste/p/' . $imagem) }}?w=auto&h=90" alt="" class="cortar">
+                            </td>
+                            {{--  <td><img src="{{ route('img-load',['h=500&w=100&img='. $imagem]) }}" alt="" class="cortar"></td>  --}}
                             <td><a href="{{ route('imagem.delete', $imagem) }}">Excluir</a></td>
                         </tr>
                         @endforeach
@@ -103,14 +106,14 @@
                 @endif
                 {{-- <label for="">Única imagem</label> --}}
                 <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
-                    @csrf    
+                    @csrf
                     @component('imagemupload::components.upload-view', ['name' => 'imagem', 'label' => 'Foto', 'multiple' => true])
-                        
+
                     @endcomponent
                     <button class="bt btn-primary" type="submit">Upload Imagem</button>
                 </form>
                {{-- <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
-                    @csrf    
+                    @csrf
                     <label for="">Imagem</label>
                     <input type="file" name="imagem" id="" required>
                     <button class="bt btn-primary" type="submit">Upload Imagem</button>
@@ -118,7 +121,7 @@
 
                 <label for="">Varias imagens</label>
                 <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
-                    @csrf    
+                    @csrf
                     <label for="">Imagem</label>
                     <input type="file" name="imagem[]" id="" multiple required>
                     <button class="bt btn-primary" type="submit">Upload Imagem</button>
