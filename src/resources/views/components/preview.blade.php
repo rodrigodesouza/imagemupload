@@ -2,6 +2,15 @@
 
 <div id="preview"></div>
 @section('scripts')
+
+<link rel="stylesheet" href="/cropper/cropper.css">
+<script src="/cropper/cropper.js"></script>
+
+<style>
+#preview .card img {
+    max-height: 200px;
+}
+</style>
 <script>
     // window.document.onload = function(e){
     //     handleFileSelect()
@@ -50,7 +59,7 @@ function handleFileSelect(event) {
         }
 
         setTimeout(function(){
-            // startCrop();
+            startCrop();
         }, 3000)
             //const image = document.getElementById('image');
 
@@ -62,8 +71,23 @@ function handleFileSelect(event) {
 
 function makeCard(file)
 {
-    let card =  "<div class=\"col-md-4\"><div class=\"card mb-4 shadow-sm\"><img src=\"" + file + "\" /></div></div>";
+    let card =  "<div class=\"col-md-4\"><div class=\"card mb-4 shadow-sm\"><img src=\"" + file + "\" class=\"image-crop\" /></div></div>";
     return card;
+}
+function startCrop(){
+    const image = document.getElementsByClassName('image-crop')
+    var cropper = new Cropper(image, {
+        aspectRatio: 16 / 9,
+        crop: function crop(event) {
+            console.log(event.detail.x);
+            console.log(event.detail.y);
+            console.log(event.detail.width);
+            console.log(event.detail.height);
+            console.log(event.detail.rotate);
+            console.log(event.detail.scaleX);
+            console.log(event.detail.scaleY);
+        }
+    });
 }
 </script>
 @endsection
