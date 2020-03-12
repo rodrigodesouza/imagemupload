@@ -1,4 +1,6 @@
-<label for="{{ $name }}">{{ isset($label) ? $label : 'Imagens' }}</label>
+<label for="{{ $name }}">{{ isset($label) ? $label : 'Imagens' }}
+
+</label>
 <div id="preview">
     {{-- <img id="preview" src="" alt="your image" style="display:none" /> --}}
 </div>
@@ -20,15 +22,15 @@ $(document).ready(function(){
     function handleFileSelect(event) {
         //Check File API support
         if (window.File && window.FileList && window.FileReader) {
-    
+
             var files = event.target.files; //FileList object
             var output = document.getElementById("preview");
-    
+
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
                 //Only pics
                 if (!file.type.match('image')) continue;
-    
+
                 var picReader = new FileReader();
                 picReader.addEventListener("load", function (event) {
                     var picFile = event.target;
@@ -38,21 +40,19 @@ $(document).ready(function(){
                 });
                 //Read the image
                 picReader.readAsDataURL(file);
-
-                
             }
 
             setTimeout(function(){
                 startCrop();
             }, 3000)
              //const image = document.getElementById('image');
-             
-            
+
+
         } else {
             console.log("Your browser does not support File API");
         }
     }
-    
+
     function startCrop()
     {
         $('.upload-cropper').cropper({
@@ -70,10 +70,10 @@ $(document).ready(function(){
                         //document.getElementById("size_image").value = JSON.stringify(event.detail)
                     }
                 });
-    }    
+    }
 
-})    
-    
+})
+
     //document.getElementById("{{ $name }}").addEventListener('change', handleFileSelect, false);
 
 </script>

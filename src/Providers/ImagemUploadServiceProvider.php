@@ -4,6 +4,7 @@ namespace Rd7\ImagemUpload\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\Facades\Blade;
 
 class ImagemUploadServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,7 @@ class ImagemUploadServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(__DIR__ . '/../database/Migrations');
+        $this->diretivas();
     }
 
     /**
@@ -91,7 +93,7 @@ class ImagemUploadServiceProvider extends ServiceProvider
 
     /**
      * Register an additional directory of factories.
-     * 
+     *
      * @return void
      */
     public function registerFactories()
@@ -109,5 +111,16 @@ class ImagemUploadServiceProvider extends ServiceProvider
     public function provides()
     {
         return [];
+    }
+
+    public function diretivas()
+    {
+        Blade::directive('datetime', function ($expression) {
+            return "<?php echo ($expression)->format('m/d/Y H:i'); ?>";
+        });
+
+        Blade::directive('preview', function ($expression) {
+            return "<?php echo view('imagemupload::components.preview'); ?>";
+        });
     }
 }

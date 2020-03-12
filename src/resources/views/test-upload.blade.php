@@ -107,9 +107,11 @@
                 {{-- <label for="">Única imagem</label> --}}
                 <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @component('imagemupload::components.upload-view', ['name' => 'imagem', 'label' => 'Foto', 'multiple' => true])
 
-                    @endcomponent
+                    @preview
+                    {{-- @component('imagemupload::components.upload-view', ['name' => 'imagem', 'label' => 'Foto', 'multiple' => true])
+
+                    @endcomponent --}}
                     <button class="bt btn-primary" type="submit">Upload Imagem</button>
                 </form>
                {{-- <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
