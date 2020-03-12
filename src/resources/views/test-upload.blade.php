@@ -8,6 +8,8 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 
         <!-- Styles -->
         <style>
@@ -105,15 +107,18 @@
                     </table>
                 @endif
                 {{-- <label for="">Única imagem</label> --}}
+                <div class="container">
                 <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     @preview
                     {{-- @component('imagemupload::components.upload-view', ['name' => 'imagem', 'label' => 'Foto', 'multiple' => true])
-
                     @endcomponent --}}
+
+                    <input type="file" class="preview" name="imagens" multiple>
                     <button class="bt btn-primary" type="submit">Upload Imagem</button>
                 </form>
+                </div>
                {{-- <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
                     @csrf
                     <label for="">Imagem</label>
@@ -137,3 +142,20 @@
         @yield('scripts')
     </body>
 </html>
+
+
+{{-- <div class="col-md-4">
+    <div class="card mb-4 shadow-sm">
+      <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      <div class="card-body">
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+          </div>
+          <small class="text-muted">9 mins</small>
+        </div>
+      </div>
+    </div>
+  </div> --}}
