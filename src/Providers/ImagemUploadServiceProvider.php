@@ -120,7 +120,7 @@ class ImagemUploadServiceProvider extends ServiceProvider
         });
 
         Blade::directive('preview', function ($expression) {
-            return "<?php echo view('imagemupload::components.preview'); ?>";
+            return "<?php echo view('imagemupload::components.preview', ['config' => $expression]); ?>";
         });
     }
 }

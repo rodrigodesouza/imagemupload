@@ -111,7 +111,8 @@
                 <form action="/pot-upload-imagem-test" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    @preview
+                    @preview(['crop' => true])
+
                     {{-- @component('imagemupload::components.upload-view', ['name' => 'imagem', 'label' => 'Foto', 'multiple' => true])
                     @endcomponent --}}
 
