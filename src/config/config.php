@@ -9,5 +9,6 @@ return [
         'url' => env('APP_URL').'/storage',
         'visibility' => 'public',
     ],
-    'generate_gitignore' => true
+    'generate_gitignore' => true,
+    'qualidade' => 100,
 ];

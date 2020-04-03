@@ -17,7 +17,7 @@ class ImagemUpload {
         ini_set('upload_max_filesize', -1);
         ini_set('max_file_uploads', -1);
         set_time_limit(0);
-  
+
         $array['imagens'] = (isset($array['input_file'])) ? $array['input_file'] : false;
 
         $array['destino'] = (isset($array['destino'])) ? $array['destino'] : false;
@@ -38,9 +38,9 @@ class ImagemUpload {
         $imagens = Input::file(str_replace('[]', '', $array['imagens']));
 
         if ($array['imagens'] and $array['destino'] and isset($imagens) > 0) {
-        
+
             $returnImages = is_array($imagens) ? [] : null;
-            
+
             if (is_array($imagens)) {
                 foreach ($imagens as $imagem) {
                     array_push($returnImages, ImagemUpload::enviaImagem($imagem, $array));
@@ -59,7 +59,7 @@ class ImagemUpload {
     public static function enviaImagem($imagem, $array) {
 
         $source = $imagem->getRealPath();
-        
+
         $nome = str_slug(pathinfo($imagem->getClientOriginalName(), PATHINFO_FILENAME));
 
         $array['extensao'] = $extensao = $imagem->getClientOriginalExtension();
@@ -79,7 +79,7 @@ class ImagemUpload {
                     // dd($dimensoes, is_array($pasta), $pasta);
                     $array['resolucao'] = ['pasta' => ((is_array($dimensoes)) ? $pasta : $dimensoes), 'dimensoes' => $dimensoes];
                     // dd($array['resolucao']);
-                    // $array['resolucao'] = ['pasta' => $pasta, 'dimensoes' => $dimensoes];   
+                    // $array['resolucao'] = ['pasta' => $pasta, 'dimensoes' => $dimensoes];
                     // dd($pasta, $dimensoes, $array['resolucao']);
                     ImagemUpload::moveImagem($array);
                 }
@@ -95,7 +95,7 @@ class ImagemUpload {
     }
 
     public static function moveImagem($array){
-        
+
         try {
             if ($array['extensao'] != 'svg') {
                 $img = Image::make($array['source']);
@@ -103,16 +103,16 @@ class ImagemUpload {
                 if (isset($array['crop'])) {
 
                 }
-                
+
                 if (!empty($array['crop']['x']) || !empty($array['crop']['y'])) {
-                    
+
                     $x = (integer) $array['crop']['x'];
                     $y = (integer) $array['crop']['y'];
                     $h = (integer) $array['crop']['h'];
                     $w = (integer) $array['crop']['w'];
                     $img = $img->crop($w, $h, $x, $y);
                 }
-                
+
                 if($array['resolucao']){
                     if (isset($array['resolucao']['dimensoes']['w']) and isset($array['resolucao']['dimensoes']['h'])) {
                         $img->resize(isset($array['resolucao']['dimensoes']['w']) ? $array['resolucao']['dimensoes']['w'] : $w, isset($array['resolucao']['dimensoes']['h']) ? $array['resolucao']['dimensoes']['h'] : $h, function ($constraint) {
@@ -138,9 +138,9 @@ class ImagemUpload {
                 }
             }
 
-            
+
             if ($array['extensao'] != 'svg') {
-                $img->save($caminho . $array['novoNome']);
+                $img->save($caminho . $array['novoNome'], config('imagemupload.qualidade'));
             } else {
                 File::copy($array['source'], $caminho.$array['novoNome']);
             }
@@ -155,7 +155,7 @@ class ImagemUpload {
 
     }
 
-    public static function deleta($array = array()) 
+    public static function deleta($array = array())
     {
         $imagem             = $array['imagem'];
         $resolucao          = (isset($array['resolucao'])) ? $array['resolucao'] : false;
