@@ -60,7 +60,7 @@ class ImagemUploadController extends Controller
         $file = Image::make($file);
 
         if ($request->get('h') || $request->get('w')) {
-            $file = $file->resize($request->get('w'), $request->get('h'), function ($constraint) use($request) {
+            $file = $file->fit($request->get('w'), $request->get('h'), function ($constraint) use($request) {
                 if($request->get('w') == 'auto' || $request->get('h') == 'auto'){
                     $constraint->aspectRatio();
                     $constraint->upsize();
