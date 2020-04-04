@@ -60,17 +60,20 @@ class ImagemUploadController extends Controller
         $file = Image::make($file);
 
         if ($request->get('h') || $request->get('w')) {
-            $file = $file->fit($request->get('w'), $request->get('h'), function ($constraint) use($request) {
-                if($request->get('w') == 'auto' || $request->get('h') == 'auto'){
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                }
-            });
+            if($request->get('w') == 'auto' || $request->get('h') == 'auto' || $request->get('fit') == 'none'){
+                $file = $file->resize($request->get('w'), $request->get('h'), function ($constraint) use($request) {
+                    if($request->get('w') == 'auto' || $request->get('h') == 'auto'){
+                        $constraint->aspectRatio();
+                    }
+                });
+            } else {
+                $file = $file->fit($request->get('w'), $request->get('h'));
+            }
         }
 
         $response = Response::make($file->encode($file->mime), 200)
-                ->header("Cache-Control", "public, max-age=31536000")
-                 ->header("Content-Type", $type);
+                            ->header("Cache-Control", "public, max-age=31536000")
+                            ->header("Content-Type", $type);
 
         return $response;
 
