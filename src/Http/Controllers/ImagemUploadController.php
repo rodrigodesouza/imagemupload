@@ -38,13 +38,12 @@ class ImagemUploadController extends Controller
         }
 
         return redirect()->back();
-
     }
 
     public function imagemRender(Request $request, $path = null, $tamanho = '/', $imagem = null)
     {
         // dd($request->all());
-        $path = config('filesystems')['disks']['public']['root']. "/" . $path . '/' . $tamanho . (!empty($imagem) ? "/" . $imagem : "");
+        $path = config('filesystems')['disks']['public']['root'] . "/" . $path . '/' . $tamanho . (!empty($imagem) ? "/" . $imagem : "");
 
         if (!File::exists($path)) {
             abort(404);
@@ -53,30 +52,32 @@ class ImagemUploadController extends Controller
         $file = File::get($path);
         $type = File::mimeType($path);
 
-        if($type == 'text/plain' || $type == "image/svg") {
+        if ($type == 'text/plain' || $type == "image/svg") {
             $type = 'image/svg+xml';
         }
 
-        $file = Image::make($file);
-
-        if ($request->get('h') || $request->get('w')) {
-            if($request->get('w') == 'auto' || $request->get('h') == 'auto' || $request->get('fit') == 'none'){
-                $file = $file->resize($request->get('w'), $request->get('h'), function ($constraint) use($request) {
-                    if($request->get('w') == 'auto' || $request->get('h') == 'auto'){
-                        $constraint->aspectRatio();
-                    }
-                });
-            } else {
-                $file = $file->fit($request->get('w'), $request->get('h'));
+        if ($type != 'image/svg+xml') {
+            $file = Image::make($file);
+            if ($request->get('h') || $request->get('w')) {
+                if ($request->get('w') == 'auto' || $request->get('h') == 'auto' || $request->get('fit') == 'none') {
+                    $file = $file->resize($request->get('w'), $request->get('h'), function ($constraint) use ($request) {
+                        if ($request->get('w') == 'auto' || $request->get('h') == 'auto') {
+                            $constraint->aspectRatio();
+                        }
+                    });
+                } else {
+                    $file = $file->fit($request->get('w'), $request->get('h'));
+                }
             }
+
+            $file = $file->encode($file->mime);
         }
 
-        $response = Response::make($file->encode($file->mime), 200)
-                            ->header("Cache-Control", "public, max-age=31536000")
-                            ->header("Content-Type", $type);
+        $response = Response::make($file, 200)
+            ->header("Cache-Control", "public, max-age=31536000")
+            ->header("Content-Type", $type);
 
         return $response;
-
     }
 
     public function imagemDelete($imagem)
@@ -84,12 +85,10 @@ class ImagemUploadController extends Controller
         $destino = 'ajuste';
         $resolucao = ['p' => ['h' => 150, 'w' => 150], 'm' => ['h' => 500, 'w' => 500]];
 
-        session()->forget('imagens.'.array_search($imagem, session('imagens')));
+        session()->forget('imagens.' . array_search($imagem, session('imagens')));
 
         ImagemUpload::deleta(['imagem' => $imagem, 'destino' => $destino, 'resolucao' => $resolucao]);
 
-       return redirect()->back();
-
+        return redirect()->back();
     }
-
 }
